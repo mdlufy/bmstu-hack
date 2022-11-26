@@ -1,0 +1,15 @@
+.scale {
+    position: fixed;
+    top: 90%;
+    left: 90%
+}
+
+.increase {
+    margin-right: 5px;
+}
+
+button {
+    padding-left: 5px;
+    border: 2px green solid;
+    cursor: pointer;
+}

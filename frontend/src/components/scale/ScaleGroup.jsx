@@ -1,12 +1,17 @@
-import React from 'react';
-import DecreaseButton from './DecreaseButton';
-import IncreaseButton from './IncreaseButton';
+import React from "react";
+import "./styles.css";
 
-function ScaleGroup(props) {
+function ScaleGroup({ increase, decrease }) {
     return (
-        <div>
-            <IncreaseButton />
-            <DecreaseButton /> 
+        <div className="scale">
+            <span>
+                <button className="increase" onClick={increase}>
+                    +
+                </button>
+                <button className="decrease" onClick={decrease}>
+                    -
+                </button>
+            </span>
         </div>
     );
 }
