@@ -5,6 +5,7 @@ import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import { fabric } from "fabric"
 import canvas from "./canvas"
+import Room from "./room"
 
 console.log(canvas)
 
@@ -312,6 +313,13 @@ canvas.add(polygon5)
 canvas.add(polygon6)
 canvas.add(circle1)
 canvas.add(circle2)
+
+new Room({
+    c: canvas,
+    x: 10,
+    y: 10,
+    number: 222
+}).add()
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
