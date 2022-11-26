@@ -16,7 +16,7 @@ export default class Room {
         this.height = height
 
         this.number = new fabric.Text(String(number), {
-            fontSize: 12,
+            fontSize: 10,
             originX: "center",
             originY: "center"
         })
@@ -33,35 +33,61 @@ export default class Room {
 
         this.group = new fabric.Group([this.room, this.number], {
             selectable: false,
+            zoomX: 1,
+            zoomY: 1,
             left: x,
             top: y
         })
 
         this.group.name = name
 
+        window.Bmstu = Bmstu
+        window.canvas = canvas
         this.group.on("mouseup", (e) => {
+            console.log("click")
+            const centerX = window.innerWidth / 2
+            const centerY = window.innerHeight / 2
+
+            const viewportLeft = canvas.viewportTransform[4]
+            const viewportTop = canvas.viewportTransform[5]
             const pointer = e.pointer
+
+            // canvas.setZoom(6)
+            // canvas.viewportTransform[4] = centerX - pointer.x
+            // canvas.viewportTransform[5] = centerY - pointer.y
+            console.log(canvas)
+            console.log(canvas.viewportTransform)
+            canvas.absolutePan({
+                x: pointer.x - centerX,
+                y: pointer.y - centerY
+            })
+            // canvas.zoomToPoint({ x: centerX, y: centerY }, 4)
+
             const target = e.target
 
-            console.log("click", e)
-            console.log(target)
             store.dispatch(setOpenAction({ name: "clickPopover", open: true }))
             store.dispatch(
                 setContentAction({ name: "clickPopover", content: "asd" })
             )
-            store.dispatch(
-                setCoordsAction({
-                    name: "clickPopover",
-                    coords: {
-                        left: target.left + target.width / 2,
-                        top: target.top
-                    }
-                })
-            )
+
+            canvas.renderAll()
+            // store.dispatch(
+            //     setCoordsAction({
+            //         name: "clickPopover",
+            //         coords: {
+            //             left:
+            //                 viewportLeft +
+            //                 target.left * zoomX +
+            //                 (target.width / 2) * zoomX,
+            //             top: viewportTop + target.top * zoomY
+            //         }
+            //     })
+            // )
         })
     }
 
     add() {
+        console.log(Bmstu.group.zoomX)
         canvas.add(this.group)
     }
 }

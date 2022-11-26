@@ -7,19 +7,14 @@ export default function ClickPopover() {
 
     console.log(clickPopover)
     return clickPopover.isOpen ? (
-        <Container
-            left={clickPopover.coords.left}
-            top={clickPopover.coords.top}
-        >
-            {clickPopover.content}
-        </Container>
+        <Container>{clickPopover.content}</Container>
     ) : null
 }
 
 const Container = styled.div`
     position: fixed;
-    left: ${(props) => props.left}px;
-    top: ${(props) => props.top - 10}px;
+    left: 50%;
+    top: 50px;
     transform: translateX(-50%) translateY(-100%);
     z-index: 10;
     background: white;

@@ -1,8 +1,8 @@
-import { fabric } from "fabric";
+import { fabric } from "fabric"
 
 const canvas = new fabric.Canvas("canvas", {
     width: document.documentElement.clientWidth,
-    height: document.documentElement.clientHeight,
-});
+    height: document.documentElement.clientHeight
+})
 
-export default canvas;
+export default canvas

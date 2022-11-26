@@ -13,8 +13,13 @@ import {
 
 export default class Bmstu {
     static init() {
-        this.group = new fabric.Group([], { selectable: false })
+        this.group = new fabric.Group([], {
+            selectable: false,
+            zoomX: 1,
+            zoomY: 1
+        })
         this.group.name = "bmstu"
+        console.log(this.group.zoomX)
 
         this.group.addWithUpdate(leftColumn)
         this.group.addWithUpdate(leftRow)
@@ -26,6 +31,7 @@ export default class Bmstu {
         this.group.addWithUpdate(centerUpReact)
 
         canvas.add(this.group)
+        console.log(this.group.zoomX)
 
         canvas.on("mouse:wheel", function (opt) {
             var delta = opt.e.deltaY
@@ -37,10 +43,6 @@ export default class Bmstu {
             opt.e.preventDefault()
             opt.e.stopPropagation()
         })
-    }
-
-    static add(obj) {
-        this.group.addWithUpdate(obj)
     }
 
     static scaleMinus() {
