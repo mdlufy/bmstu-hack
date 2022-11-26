@@ -6,7 +6,9 @@ import {
     leftArc,
     rightColumn,
     rightRow,
-    rightArc
+    rightArc,
+    centerDownRect,
+    centerUpReact
 } from "./bmstu-parts"
 
 export default class Bmstu {

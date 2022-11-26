@@ -1,6 +1,6 @@
 import { fabric } from "fabric"
 import Bmstu from "./bmstu"
-import canvas from "../canvas"
+import canvas from "../components/MainCanvas/MainCanvas"
 import store from "../store"
 import {
     setContentAction,
