@@ -8,6 +8,9 @@ import canvas from "./canvas"
 
 console.log(canvas)
 
+const strokeWidth = 1
+const stroke = "#D3D1E2"
+
 var points = [
     {
         x: 0,
@@ -42,8 +45,8 @@ var polygon = new fabric.Polygon(points, {
     left: 0,
     top: 25,
     fill: "#D3D1E2",
-    strokeWidth: 2,
-    stroke: "black",
+    strokeWidth,
+    stroke,
     scaleX: 1,
     scaleY: 1,
     objectCaching: false,
@@ -82,8 +85,8 @@ var polygon2 = new fabric.Polygon(
         left: 91,
         top: 155,
         fill: "#D3D1E2",
-        strokeWidth: 2,
-        stroke: "black",
+        strokeWidth,
+        stroke,
         scaleX: 1,
         scaleY: 1,
         objectCaching: false,
@@ -127,8 +130,8 @@ var polygon3 = new fabric.Polygon(
         left: 707,
         top: 6,
         fill: "#D3D1E2",
-        strokeWidth: 2,
-        stroke: "black",
+        strokeWidth,
+        stroke,
         scaleX: 1,
         scaleY: 1,
         objectCaching: false,
@@ -153,7 +156,7 @@ var polygon4 = new fabric.Polygon(
         },
         {
             x: -223,
-            y: 322
+            y: 325
         },
         {
             x: -231,
@@ -168,8 +171,8 @@ var polygon4 = new fabric.Polygon(
         left: 565,
         top: 160,
         fill: "#D3D1E2",
-        strokeWidth: 2,
-        stroke: "black",
+        strokeWidth,
+        stroke,
         scaleX: 1,
         scaleY: 1,
         objectCaching: false,
@@ -217,8 +220,8 @@ var polygon5 = new fabric.Polygon(
         left: 401,
         top: 224,
         fill: "#D3D1E2",
-        strokeWidth: 2,
-        stroke: "black",
+        strokeWidth,
+        stroke,
         scaleX: 1,
         scaleY: 1,
         objectCaching: false,
@@ -266,8 +269,8 @@ var polygon6 = new fabric.Polygon(
         left: 412,
         top: 474,
         fill: "#D3D1E2",
-        strokeWidth: 2,
-        stroke: "black",
+        strokeWidth,
+        stroke,
         scaleX: 1,
         scaleY: 1,
         objectCaching: false,
@@ -276,12 +279,39 @@ var polygon6 = new fabric.Polygon(
     }
 )
 
+var circle1 = new fabric.Circle({
+    radius: 140,
+    left: 180,
+    top: 455,
+    skewY: 7,
+    scaleX: 1.5,
+    startAngle: 180,
+    endAngle: 270,
+    stroke: "#D3D1E2",
+    strokeWidth: 50,
+    fill: "white"
+})
+
+var circle2 = new fabric.Circle({
+    radius: 145,
+    left: 325,
+    top: 480,
+    scaleX: 1.5,
+    startAngle: 270,
+    endAngle: 360,
+    stroke: "#D3D1E2",
+    strokeWidth: 50,
+    fill: "white"
+})
+
 canvas.add(polygon)
 canvas.add(polygon2)
 canvas.add(polygon3)
 canvas.add(polygon4)
 canvas.add(polygon5)
 canvas.add(polygon6)
+canvas.add(circle1)
+canvas.add(circle2)
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
