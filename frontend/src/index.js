@@ -321,6 +321,14 @@ new Room({
     number: 222
 }).add()
 
+const objects = [polygon, polygon2, polygon3, polygon4, polygon5, polygon6];
+
+canvas.add(...objects);
+
+var group = new fabric.Group(objects);
+
+canvas.add(group);
+
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
     <React.StrictMode>
