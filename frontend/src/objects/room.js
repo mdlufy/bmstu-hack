@@ -1,6 +1,5 @@
 import { fabric } from "fabric"
 import Bmstu from "./bmstu"
-import canvas from "../canvas"
 
 export default class Room {
     constructor({ x, y, width = 50, height = 50, number }) {
