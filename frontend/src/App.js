@@ -98,7 +98,7 @@ function App() {
         >
             <ClickPopover />
             <BmstuFundament />
-            {/* <ScaleGroup /> */}
+            <ScaleGroup />
         </div>
     )
 }

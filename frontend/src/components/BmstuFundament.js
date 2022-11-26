@@ -21,6 +21,7 @@ export default function BmstuFundament() {
     const origin = useBmstuOrigin()
 
     const zoomToRoom = (e, { left, top }) => {
+        console.log(e)
         const diffOriginX = 1970 / 4
         const diffOriginY = 1461 / 4
         const el = bmstuRef.current
@@ -29,8 +30,8 @@ export default function BmstuFundament() {
         const originY = room.offsetTop
         const realLeft = e.clientX - translate.x
         const realTop = e.clientY - translate.y
-        const newLeft = window.innerWidth / 2 - realLeft
-        const newTop = window.innerHeight / 2 - realTop
+        const newLeft = window.innerWidth / 2 - room.offsetLeft
+        const newTop = window.innerHeight / 2 - room.offsetTop
         console.log(translate, "translate")
 
         console.log(originX, originY, "origin")
