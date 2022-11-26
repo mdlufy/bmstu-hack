@@ -1,5 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
+import { Provider } from "react-redux"
+import store from "./store"
 import "./index.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
@@ -10,14 +12,38 @@ Bmstu.init()
 
 new Room({
     x: 10,
-    y: 10,
-    number: 222
+    y: 40,
+    number: 222,
+    name: "222"
+}).add()
+
+new Room({
+    x: 10,
+    y: 70,
+    number: 223,
+    name: "223"
+}).add()
+
+new Room({
+    x: 12,
+    y: 100,
+    number: 224,
+    name: "224"
+}).add()
+
+new Room({
+    x: 55,
+    y: 40,
+    number: 225,
+    name: "225"
 }).add()
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
     <React.StrictMode>
-        <App />
+        <Provider store={store}>
+            <App />
+        </Provider>
     </React.StrictMode>
 );
 

@@ -43,7 +43,8 @@ export const leftColumn = new fabric.Polygon(
         scaleY: 1,
         objectCaching: false,
         transparentCorners: false,
-        cornerColor: "blue"
+        cornerColor: "blue",
+        name: "leftColumn"
     }
 )
 
@@ -84,7 +85,8 @@ export const leftRow = new fabric.Polygon(
         scaleY: 1,
         objectCaching: false,
         transparentCorners: false,
-        cornerColor: "blue"
+        cornerColor: "blue",
+        name: "leftRow"
     }
 )
 
@@ -129,7 +131,8 @@ export const rightColumn = new fabric.Polygon(
         scaleY: 1,
         objectCaching: false,
         transparentCorners: false,
-        cornerColor: "blue"
+        cornerColor: "blue",
+        name: "rightColumn"
     }
 )
 
@@ -170,7 +173,8 @@ export const rightRow = new fabric.Polygon(
         scaleY: 1,
         objectCaching: false,
         transparentCorners: false,
-        cornerColor: "blue"
+        cornerColor: "blue",
+        name: "rightRow"
     }
 )
 
@@ -219,7 +223,8 @@ export const centerUpReact = new fabric.Polygon(
         scaleY: 1,
         objectCaching: false,
         transparentCorners: false,
-        cornerColor: "blue"
+        cornerColor: "blue",
+        name: "centerUpRect"
     }
 )
 
@@ -268,7 +273,8 @@ export const centerDownRect = new fabric.Polygon(
         scaleY: 1,
         objectCaching: false,
         transparentCorners: false,
-        cornerColor: "blue"
+        cornerColor: "blue",
+        name: "centerDownRect"
     }
 )
 
@@ -282,7 +288,8 @@ export const leftArc = new fabric.Circle({
     endAngle: 270,
     stroke: "#D3D1E2",
     strokeWidth: 50,
-    fill: "white"
+    fill: "white",
+    name: "leftArc"
 })
 
 export const rightArc = new fabric.Circle({
@@ -294,5 +301,6 @@ export const rightArc = new fabric.Circle({
     endAngle: 360,
     stroke: "#D3D1E2",
     strokeWidth: 50,
-    fill: "white"
+    fill: "white",
+    name: "rightArc"
 })
