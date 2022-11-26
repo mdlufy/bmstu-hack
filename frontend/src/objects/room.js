@@ -1,8 +1,9 @@
 import { fabric } from "fabric"
+import Bmstu from "./bmstu"
+import canvas from "../canvas"
 
 export default class Room {
-    constructor({ c, x, y, width = 50, height = 50, number }) {
-        this.c = c
+    constructor({ x, y, width = 50, height = 50, number }) {
         this.x = x
         this.y = y
         this.width = width
@@ -13,6 +14,7 @@ export default class Room {
             originX: "center",
             originY: "center"
         })
+
         this.room = new fabric.Rect({
             fill: "orange",
             left: 0,
@@ -22,6 +24,7 @@ export default class Room {
             originX: "center",
             originY: "center"
         })
+
         this.group = new fabric.Group([this.room, this.number], {
             left: x,
             top: y
@@ -29,6 +32,6 @@ export default class Room {
     }
 
     add() {
-        this.c.add(this.group)
+        Bmstu.add(this.group)
     }
 }
