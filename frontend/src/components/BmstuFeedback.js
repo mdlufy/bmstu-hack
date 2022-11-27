@@ -12,7 +12,7 @@ export default function BmstuFeedback() {
         const fields = form.getFieldsValue()
 
         axios
-            .post("/feedback", { data: fields })
+            .post("/feedback/", { data: fields })
             .then((res) => {
                 console.log(res)
                 message.success("Сообщение успешно отправлено, спасибо)")
