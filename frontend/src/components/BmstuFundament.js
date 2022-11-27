@@ -48,6 +48,9 @@ export default function BmstuFundament() {
         if (room) {
             dispatch(setLevelAction(room.floor))
             zoomToRoom(room)
+            setTimeout(() => {
+                eb.emit("roomFocusInner", room.id)
+            }, 200)
         }
     }
 

@@ -14,14 +14,23 @@ export default function Room(props) {
     const roomFocus = (roomId) => {
         if (roomId == room.id) {
             hide()
-            setTimeout(() => setClicked(true), 500)
+        }
+    }
+
+    const roomFocusInner = (roomId) => {
+        if (roomId == room.id) {
+            setTimeout(() => setClicked(true), 300)
         }
     }
 
     useEffect(() => {
         eb.on("roomFocus", roomFocus)
+        eb.on("roomFocusInner", roomFocusInner)
 
-        return () => eb.off("roomFocus", roomFocus)
+        return () => {
+            eb.off("roomFocus", roomFocus)
+            eb.off("roomFocusInner", roomFocusInner)
+        }
     }, [])
 
     const zoomToRoom = () => {

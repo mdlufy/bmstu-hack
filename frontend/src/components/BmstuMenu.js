@@ -14,18 +14,32 @@ export default function BmstuMenu() {
     const rooms = useRooms()
     const level = useLevel()
 
+    const searchFunction = (room, value) => {
+        const numberCondition =
+            room.number !== "Stairs" &&
+            new RegExp(value, "i").test(room.number) &&
+            value
+        const titleCondition = new RegExp(value, "i").test(room.title) && value
+        const descriptionCondition =
+            new RegExp(value, "i").test(room.description) && value
+
+        return numberCondition || titleCondition || descriptionCondition
+    }
+
     const changeSearch = (e) => {
         const value = e.target.value.trim()
 
         setSearchValue(value)
 
-        const founded = rooms.filter(
-            (room) => new RegExp(value, "i").test(room.number) && value
-        )
+        const founded = rooms.filter((room) => searchFunction(room, value))
 
         const newDropdownMenu = founded.map((room) => ({
             key: room.id,
-            label: room.number
+            label: (
+                <span>
+                    <b>{room.number}</b> {room.title}
+                </span>
+            )
         }))
 
         console.log(newDropdownMenu)
@@ -53,9 +67,8 @@ export default function BmstuMenu() {
     }
 
     const onSearch = () => {
-        const room = rooms.filter(
-            (room) =>
-                new RegExp(searchValue, "i").test(room.number) && searchValue
+        const room = rooms.filter((room) =>
+            searchFunction(room, searchValue)
         )[0]
 
         if (room) {
@@ -77,7 +90,7 @@ export default function BmstuMenu() {
     return (
         <Container>
             <Space direction="vertical">
-                <Dropdown
+                <StyledDropdown
                     menu={{ items: dropdownMenu, onClick: dropdownItemClick }}
                     open={open}
                 >
@@ -86,7 +99,7 @@ export default function BmstuMenu() {
                         value={searchValue}
                         onSearch={onSearch}
                     />
-                </Dropdown>
+                </StyledDropdown>
                 <Select defaultValue={2} onChange={changeLevel} value={level}>
                     <Select.Option value="1">1</Select.Option>
                     <Select.Option value="2">2</Select.Option>
@@ -96,6 +109,10 @@ export default function BmstuMenu() {
         </Container>
     )
 }
+
+const StyledDropdown = styled(Dropdown)`
+    max-height: 500px;
+`
 
 const StyledSearch = styled(Input.Search)``
 
