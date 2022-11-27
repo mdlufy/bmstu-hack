@@ -1,1 +1,3 @@
-module.exports = require("js-event-bus")()
+import eventBus from "js-event-bus"
+
+export default eventBus()

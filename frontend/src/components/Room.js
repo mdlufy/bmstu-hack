@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { Popover, Tooltip } from "antd"
+import { Popover } from "antd"
 
 export default function Room(props) {
     const [hovered, setHovered] = useState(false)
