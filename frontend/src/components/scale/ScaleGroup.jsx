@@ -1,3 +1,4 @@
+import { Button } from "antd"
 import React from "react"
 import { useDispatch } from "react-redux"
 import Bmstu from "../../objects/bmstu"
@@ -10,22 +11,20 @@ function ScaleGroup() {
     const scale = useBmstuScale()
 
     function increase() {
-        dispatch(setScaleAction(scale + 0.1))
+        dispatch(setScaleAction(scale + 0.2))
     }
 
     function decrease() {
-        dispatch(setScaleAction(scale - 0.1))
+        dispatch(setScaleAction(scale - 0.2))
     }
 
     return (
         <div className="scale">
             <span>
-                <button className="increase" onClick={() => increase()}>
+                <Button onClick={increase} style={{ marginRight: 10 }}>
                     +
-                </button>
-                <button className="decrease" onClick={() => decrease()}>
-                    -
-                </button>
+                </Button>
+                <Button onClick={decrease}>-</Button>
             </span>
         </div>
     )

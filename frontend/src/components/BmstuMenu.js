@@ -5,6 +5,7 @@ import styled from "styled-components"
 import { setLevelAction, useLevel, useRooms } from "../slices/rooms"
 import eb from "../eb"
 import { useDispatch } from "react-redux"
+import Favorites from "./Favorites"
 
 export default function BmstuMenu() {
     const dispatch = useDispatch()
@@ -105,6 +106,7 @@ export default function BmstuMenu() {
                     <Select.Option value="2">2</Select.Option>
                     <Select.Option value="3">3</Select.Option>
                 </Select>
+                <Favorites />
             </Space>
         </Container>
     )

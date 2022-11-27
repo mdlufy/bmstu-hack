@@ -10,6 +10,8 @@ import { setRoomsAction } from "./slices/rooms"
 import axios from "axios"
 import BmstuFeedback from "./components/BmstuFeedback"
 import Signin from "./components/Signin"
+import BmstuUser from "./components/BmstuUser"
+import { getFavorites, setTokenAction } from "./slices/user"
 
 const roomsFallback = JSON.parse(
     '[{"id":2,"number":"201","floor":2,"description":"Кафедра БМТ-1. Учебно-нвучная лаборатория методов автоматизированного распознавания биомедицинских изображений и сигналов",' +
@@ -25,6 +27,9 @@ function App() {
     const rooms = roomsFallback
 
     useEffect(() => {
+        const token = localStorage.getItem("token") || ""
+        dispatch(setTokenAction(token))
+
         axios("/objects")
             .then(({ data }) => {
                 const rooms = data.map((room) => ({
@@ -39,24 +44,20 @@ function App() {
                     floor: room.Floor
                 }))
 
+                rooms.push({
+                    left: 500,
+                    top: 200,
+                    width: 20,
+                    height: 20,
+                    floor: 2,
+                    number: "222"
+                })
                 console.log(rooms)
                 dispatch(setRoomsAction(rooms))
+                dispatch(getFavorites())
             })
             .catch(console.error)
     }, [])
-
-    rooms.push({
-        left: 100,
-        top: 100,
-        width: 20,
-        height: 20,
-        floor: 2,
-        number: "222"
-    })
-
-    console.log(JSON.stringify(rooms))
-    setRoomsAction(rooms)
-    console.log(rooms)
 
     useEffect(() => {
         window.addEventListener("keydown", (e) => {
@@ -146,6 +147,7 @@ function App() {
             onMouseUp={mouseup}
         >
             <Signin />
+            <BmstuUser />
             <BmstuFeedback />
             <BmstuMenu />
             <ClickPopover />

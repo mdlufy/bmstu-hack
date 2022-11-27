@@ -1,15 +1,20 @@
 import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
-import { Popover } from "antd"
+import { Button, message, Popover } from "antd"
 import { CloseOutlined } from "@ant-design/icons"
 import eb from "../eb"
 import stairs from "../assets/stairs.png"
+import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
+import { getFavorites, selectToken } from "../slices/user"
 
 export default function Room(props) {
+    const dispatch = useDispatch()
     const { room } = props
     const [hovered, setHovered] = useState(false)
     const [clicked, setClicked] = useState(false)
     const roomRef = useRef(null)
+    const token = useSelector(selectToken)
 
     const roomFocus = (roomId) => {
         if (roomId == room.id) {
@@ -56,6 +61,27 @@ export default function Room(props) {
         setClicked(open)
     }
 
+    const like = () => {
+        axios
+            .post(
+                "/favorites",
+                { id_object: room.id },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+            .then((res) => {
+                dispatch(getFavorites())
+                message.success("Комната успешно сохранена")
+            })
+            .catch(() => {
+                message.error("Не получилось сохранить комнату(")
+            })
+        console.log("like")
+    }
+
     return (
         <Popover
             placement="top"
@@ -70,6 +96,11 @@ export default function Room(props) {
                 content={
                     <div>
                         {room.description}
+                        {token && (
+                            <Button onClick={like} style={{ display: "block" }}>
+                                Like
+                            </Button>
+                        )}
                         <CloseIcon onClick={hide} />
                     </div>
                 }

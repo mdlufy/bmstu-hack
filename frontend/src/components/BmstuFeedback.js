@@ -58,7 +58,7 @@ export default function BmstuFeedback() {
 
 export const Container = styled.div`
     position: absolute;
-    right: 70px;
+    right: 110px;
     bottom: 10px;
     z-index: 20;
 `

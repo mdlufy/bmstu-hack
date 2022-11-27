@@ -1,7 +1,7 @@
 import { Button, Form, Input, message, Modal } from "antd"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
-import { selectToken, setTokenAction } from "../slices/user"
+import { getFavorites, selectToken, setTokenAction } from "../slices/user"
 import { useState } from "react"
 import styled from "styled-components"
 import { useForm } from "antd/es/form/Form"
@@ -18,6 +18,7 @@ export default function Signin() {
             .then(({ data }) => {
                 console.log(data)
                 dispatch(setTokenAction(data.token))
+                dispatch(getFavorites())
                 localStorage.setItem("token", data.token)
                 setIsModalOpen(false)
                 message.success("Вход выполнен")
@@ -46,7 +47,7 @@ export default function Signin() {
 
     return (
         <Container>
-            {token && (
+            {!token && (
                 <Button
                     className={"auth-button"}
                     type="primary"
@@ -98,7 +99,7 @@ export default function Signin() {
 
 export const Container = styled.div`
     position: absolute;
-    right: 70px;
+    right: 110px;
     bottom: 10px;
     z-index: 20;
 `
