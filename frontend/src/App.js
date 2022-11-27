@@ -23,6 +23,7 @@ function App() {
             .then(({ data }) => {
                 const rooms = data.map((room) => ({
                     id: room.Id_object,
+                    title: room.Title,
                     number: String(room.Number),
                     floor: room.Floor,
                     description: room.Description,
@@ -35,10 +36,19 @@ function App() {
 
                 console.log(JSON.stringify(rooms))
                 console.log(rooms)
+                // rooms.push({
+                //     left: 200,
+                //     top: 230,
+                //     width: 30,
+                //     height: 20,
+                //     number: "222",
+                //     floor: 2
+                // })
 
                 dispatch(setRoomsAction(rooms))
             })
             .catch(() => {
+                console.log("error rooms")
                 dispatch(setRoomsAction(roomsFallback))
             })
     }, [])

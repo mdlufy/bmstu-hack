@@ -7,12 +7,12 @@ import {
     setScaleAction,
     setTranslateAction,
     useBmstuOrigin,
-    setOriginAction,
-    setBmstuElAction
+    setOriginAction
 } from "../slices/bmstu"
-import { useLevel, useRooms } from "../slices/rooms"
+import { setLevelAction, useLevel, useRooms } from "../slices/rooms"
 import BmstuFundamentImage from "./BmstuFundamentImage"
 import Room from "./Room"
+import eb from "../eb"
 
 export default function BmstuFundament() {
     const dispatch = useDispatch()
@@ -41,9 +41,23 @@ export default function BmstuFundament() {
         dispatch(setTranslateAction({ x: newLeft, y: newTop }))
         dispatch(setOriginAction({ x: originX, y: originY }))
     }
-    console.log("update", translate)
 
-    const roomsForLevel = rooms
+    const roomFocus = (roomId) => {
+        const room = rooms.find((room) => room.id == roomId)
+
+        if (room) {
+            dispatch(setLevelAction(room.floor))
+            zoomToRoom(room)
+        }
+    }
+
+    useEffect(() => {
+        eb.on("roomFocus", roomFocus)
+
+        return () => eb.off("roomFocus", roomFocus)
+    })
+
+    const roomsForLevel = rooms.filter((room) => room.floor == level)
 
     return (
         <Container

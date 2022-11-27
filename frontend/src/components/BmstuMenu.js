@@ -1,15 +1,18 @@
 import React from "react"
-import { Dropdown, Input } from "antd"
+import { Dropdown, Input, Select, Space } from "antd"
 import { useState } from "react"
 import styled from "styled-components"
-import { useRooms } from "../slices/rooms"
+import { setLevelAction, useLevel, useRooms } from "../slices/rooms"
 import eb from "../eb"
+import { useDispatch } from "react-redux"
 
 export default function BmstuMenu() {
+    const dispatch = useDispatch()
     const [searchValue, setSearchValue] = useState("")
     const [open, setOpen] = useState(false)
     const [dropdownMenu, setDropdownMenu] = useState([])
     const rooms = useRooms()
+    const level = useLevel()
 
     const changeSearch = (e) => {
         const value = e.target.value.trim()
@@ -67,23 +70,39 @@ export default function BmstuMenu() {
         eb.emit("roomFocus", id)
     }
 
+    const changeLevel = (level) => {
+        dispatch(setLevelAction(level))
+    }
+
     return (
         <Container>
-            <Dropdown
-                menu={{ items: dropdownMenu, onClick: dropdownItemClick }}
-                open={open}
-            >
-                <StyledSearch
-                    onChange={changeSearch}
-                    value={searchValue}
-                    onSearch={onSearch}
-                />
-            </Dropdown>
+            <Space direction="vertical">
+                <Dropdown
+                    menu={{ items: dropdownMenu, onClick: dropdownItemClick }}
+                    open={open}
+                >
+                    <StyledSearch
+                        onChange={changeSearch}
+                        value={searchValue}
+                        onSearch={onSearch}
+                    />
+                </Dropdown>
+                <Select defaultValue={2} onChange={changeLevel} value={level}>
+                    <Select.Option value="1">1</Select.Option>
+                    <Select.Option value="2">2</Select.Option>
+                    <Select.Option value="3">3</Select.Option>
+                </Select>
+            </Space>
         </Container>
     )
 }
 
 const StyledSearch = styled(Input.Search)``
+
+const FloorLabel = styled.div`
+    height: 100%;
+    background: white;
+`
 
 const Container = styled.div`
     position: fixed;

@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import { Popover } from "antd"
+import { CloseOutlined } from "@ant-design/icons"
 import eb from "../eb"
+import stairs from "../assets/stairs.png"
 
 export default function Room(props) {
     const { room } = props
@@ -10,13 +12,9 @@ export default function Room(props) {
     const roomRef = useRef(null)
 
     const roomFocus = (roomId) => {
-        console.log("roomfocus2", roomId, room.id)
         if (roomId == room.id) {
-            props.zoomToRoom(room)
             hide()
             setTimeout(() => setClicked(true), 500)
-
-            console.log("roomfocus")
         }
     }
 
@@ -52,7 +50,7 @@ export default function Room(props) {
     return (
         <Popover
             placement="top"
-            title="test"
+            title={room.title}
             trigger="hover"
             color="white"
             open={hovered}
@@ -62,25 +60,39 @@ export default function Room(props) {
             <Popover
                 content={
                     <div>
-                        test
-                        <a onClick={hide}>Close</a>
+                        {room.description}
+                        <CloseIcon onClick={hide} />
                     </div>
                 }
-                title="Click title"
+                title={room.title}
                 trigger="click"
                 open={clicked}
                 onOpenChange={handleClickChange}
+                overlayInnerStyle={{ paddingTop: 25, maxWidth: 300 }}
             >
                 <Container {...room} onClick={zoomToRoom} ref={roomRef}>
-                    {room.number}
+                    {room.number === "Stairs" ? (
+                        <img src={stairs} />
+                    ) : (
+                        room.number
+                    )}
                 </Container>
             </Popover>
         </Popover>
     )
 }
 
+const CloseIcon = styled(CloseOutlined)`
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+`
+
 const Container = styled.div`
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     left: ${(props) => props.left}px;
     top: ${(props) => props.top}px;
@@ -89,4 +101,8 @@ const Container = styled.div`
     background: orange;
     font-size: 10px;
     cursor: pointer;
+
+    img {
+        width: 10px;
+    }
 `
