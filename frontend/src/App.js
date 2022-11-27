@@ -9,6 +9,7 @@ import BmstuMenu from "./components/BmstuMenu"
 import { setRoomsAction } from "./slices/rooms"
 import axios from "axios"
 import BmstuFeedback from "./components/BmstuFeedback"
+import Signin from "./components/Signin";
 
 const roomsFallback = JSON.parse(
     '[{"id":2,"number":"201","floor":2,"description":"Кафедра БМТ-1. Учебно-нвучная лаборатория методов автоматизированного распознавания биомедицинских изображений и сигналов",' +
@@ -21,7 +22,6 @@ function App() {
     const [isGrab, setIsGrab] = useState(false)
     const [isMove, setIsMove] = useState(false)
 
-<<<<<<< HEAD
     const rooms = roomsFallback
 
     rooms.push({
@@ -34,42 +34,10 @@ function App() {
     })
 
     console.log(JSON.stringify(rooms))
+    setRoomsAction(rooms)
     console.log(rooms)
-=======
-    useEffect(() => {
-        axios("/objects")
-            .then(({ data }) => {
-                const rooms = data.map((room) => ({
-                    id: room.Id_object,
-                    title: room.Title,
-                    number: String(room.Number),
-                    floor: room.Floor,
-                    description: room.Description,
-                    typeId: room.Id_type,
-                    left: room.X_coordination,
-                    top: room.Y_coordination,
-                    width: room.Width,
-                    height: room.Height
-                }))
 
-                console.log(rooms)
-                // rooms.push({
-                //     left: 200,
-                //     top: 230,
-                //     width: 30,
-                //     height: 20,
-                //     number: "222",
-                //     floor: 2
-                // })
 
-                dispatch(setRoomsAction(rooms))
-            })
-            .catch(() => {
-                console.log("error rooms")
-                dispatch(setRoomsAction(roomsFallback))
-            })
-    }, [])
->>>>>>> 420e454dbb431cbbdb4907deeac1311088bd7400
 
     useEffect(() => {
         window.addEventListener("keydown", (e) => {
@@ -159,6 +127,7 @@ function App() {
             onMouseUp={mouseup}
         >
             <BmstuMenu />
+            <Signin />
             <BmstuFeedback />
             <ClickPopover />
             <BmstuFundament />

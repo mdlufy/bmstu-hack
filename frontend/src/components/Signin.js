@@ -1,18 +1,17 @@
-import { Button, Form, Input, message } from "antd"
+import { Button, Form, Input, message, Modal, } from "antd"
 import axios from "axios"
 import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
 import { setTokenAction } from "../slices/user"
+import {useState} from "react";
+import styled from "styled-components";
 
 export default function Signin() {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     const onFinish = () => {
         axios("/signin")
             .then(() => {
                 message.success("Вход выполнен")
-                navigate("/")
             })
             .catch(() => {
                 dispatch(setTokenAction("123"))
@@ -22,7 +21,26 @@ export default function Signin() {
 
     const onFinishFailed = () => {}
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
     return (
+        <Container>
+            <Button type="primary" onClick={showModal}>
+                Open Modal
+            </Button>
+            <Modal title="Авторизация" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <Form
             name="basic"
             onFinish={onFinish}
@@ -51,5 +69,14 @@ export default function Signin() {
                 </Button>
             </Form.Item>
         </Form>
+            </Modal>
+        </Container>
     )
 }
+
+export const Container = styled.div`
+    position: absolute;
+    right: 70px;
+    bottom: 10px;
+    z-index: 20;
+`
