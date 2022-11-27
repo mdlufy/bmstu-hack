@@ -5,11 +5,43 @@ import BmstuFundament from "./components/BmstuFundament"
 import { useEffect, useState } from "react"
 import bmstu, { setTranslateAction, useBmstuEl } from "./slices/bmstu"
 import { useDispatch } from "react-redux"
+import BmstuMenu from "./components/BmstuMenu"
+import { setRoomsAction } from "./slices/rooms"
+import axios from "axios"
+
+const roomsFallback = JSON.parse(
+    '[{"id":2,"number":"201","floor":2,"description":"Кафедра БМТ-1. Учебно-нвучная лаборатория методов автоматизированного распознавания биомедицинских изображений и сигналов","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":4,"number":"203","floor":2,"description":"Учебная аудитория","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":6,"number":"205","floor":2,"description":"Кафедра РК-9 Секция: Системы и методы управления жизненным циклом","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":8,"number":"207","floor":2,"description":"Кафедра МТ-1","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":10,"number":"209","floor":2,"description":"Учебная аудитория","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":14,"number":"214","floor":2,"description":"Библиотека. Отдел технической обработки","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":15,"number":"313","floor":2,"description":"Читальный зал и абонемент научной литературы. Читальный зал старших курсов","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":16,"number":"215","floor":2,"description":"Неизвестная аудитория","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":13,"number":"212","floor":2,"description":"Отдел Компьютерных технологий. Дисплейный класс","typeId":1,"left":10,"top":168,"width":25,"height":12},{"id":1,"number":"200","floor":2,"description":"Кафедра БМТ-1","typeId":1,"left":10,"top":70,"width":25,"height":12},{"id":11,"number":"210а","floor":2,"description":"Компьютерная лаборатория №5. Компьютерный класс №501","typeId":1,"left":10,"top":140,"width":25,"height":12},{"id":3,"number":"202","floor":2,"description":"НОЦ. Фотоника и ИК-техника","typeId":1,"left":10,"top":84,"width":25,"height":12},{"id":7,"number":"206","floor":2,"description":"Учебная Аудитория","typeId":1,"left":10,"top":112,"width":25,"height":12},{"id":12,"number":"210","floor":2,"description":"Компьютерная лаборатория №5. Включая компьютерный класс №501 и №502","typeId":1,"left":10,"top":154,"width":25,"height":12},{"id":5,"number":"204","floor":2,"description":"Учебная аудитория","typeId":1,"left":10,"top":98,"width":25,"height":12},{"id":9,"number":"208","floor":2,"description":"Кафедра: Промышленный дизайн","typeId":1,"left":10,"top":126,"width":25,"height":12}]'
+)
 
 function App() {
     const dispatch = useDispatch()
     const [isGrab, setIsGrab] = useState(false)
     const [isMove, setIsMove] = useState(false)
+
+    useEffect(() => {
+        axios("/objects")
+            .then(({ data }) => {
+                const rooms = data.map((room) => ({
+                    id: room.Id_object,
+                    number: String(room.Number),
+                    floor: room.Floor,
+                    description: room.Description,
+                    typeId: room.Id_type,
+                    left: room.X_coordination,
+                    top: room.Y_coordination,
+                    width: room.Width,
+                    height: room.Height
+                }))
+
+                console.log(JSON.stringify(rooms))
+                console.log(rooms)
+
+                dispatch(setRoomsAction(rooms))
+            })
+            .catch(() => {
+                dispatch(setRoomsAction(roomsFallback))
+            })
+    }, [])
 
     useEffect(() => {
         window.addEventListener("keydown", (e) => {
@@ -34,6 +66,7 @@ function App() {
     const mousedown = (e) => {
         if (!isGrab) return
 
+        console.log("down")
         const bmstuFundament = document.querySelector(".bmstu-fundament")
         bmstuFundament.baseLeft = e.clientX
         bmstuFundament.baseTop = e.clientY
@@ -43,6 +76,7 @@ function App() {
 
     const mousemove = (e) => {
         if (!isMove) return
+        console.log("move")
 
         const bmstuFundament = document.querySelector(".bmstu-fundament")
         const diffLeft = bmstuFundament.baseLeft - e.clientX
@@ -96,6 +130,7 @@ function App() {
             onMouseDown={mousedown}
             onMouseUp={mouseup}
         >
+            <BmstuMenu />
             <ClickPopover />
             <BmstuFundament />
             <ScaleGroup />

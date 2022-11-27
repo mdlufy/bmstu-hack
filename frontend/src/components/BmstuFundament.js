@@ -10,6 +10,7 @@ import {
     setOriginAction,
     setBmstuElAction
 } from "../slices/bmstu"
+import { useLevel, useRooms } from "../slices/rooms"
 import BmstuFundamentImage from "./BmstuFundamentImage"
 import Room from "./Room"
 
@@ -19,6 +20,8 @@ export default function BmstuFundament() {
     const scale = useBmstuScale()
     const translate = useBmstuTranslate()
     const origin = useBmstuOrigin()
+    const rooms = useRooms()
+    const level = useLevel()
 
     const zoomToRoom = (e, { left, top }) => {
         console.log(e)
@@ -48,6 +51,8 @@ export default function BmstuFundament() {
     }
     console.log("update", translate)
 
+    const roomsForLevel = rooms
+
     return (
         <Container
             ref={bmstuRef}
@@ -57,7 +62,17 @@ export default function BmstuFundament() {
             className="bmstu-fundament"
         >
             <BmstuFundamentImage />
-            <Room left={10} top={70} content={200} zoomToRoom={zoomToRoom} />
+            {roomsForLevel.map((room) => (
+                <Room
+                    key={room.id}
+                    left={room.left}
+                    top={room.top}
+                    width={room.width}
+                    height={room.height}
+                    number={room.number}
+                    zoomToRoom={zoomToRoom}
+                />
+            ))}
             <Room left={200} top={200} content={200} zoomToRoom={zoomToRoom} />
         </Container>
     )
