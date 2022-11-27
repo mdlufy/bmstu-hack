@@ -126,9 +126,9 @@ function App() {
             onMouseDown={mousedown}
             onMouseUp={mouseup}
         >
-            <BmstuMenu />
             <Signin />
             <BmstuFeedback />
+            <BmstuMenu />
             <ClickPopover />
             <BmstuFundament />
             <ScaleGroup />

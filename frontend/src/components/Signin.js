@@ -37,7 +37,7 @@ export default function Signin() {
 
     return (
         <Container>
-            <Button type="primary" onClick={showModal}>
+            <Button className={'auth-button'} type="primary" onClick={showModal}>
                 Open Modal
             </Button>
             <Modal title="Авторизация" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
