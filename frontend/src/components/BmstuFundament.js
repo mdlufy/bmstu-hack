@@ -23,22 +23,14 @@ export default function BmstuFundament() {
     const rooms = useRooms()
     const level = useLevel()
 
-    const zoomToRoom = (e, { left, top }) => {
-        console.log(e)
-        const diffOriginX = 1970 / 4
-        const diffOriginY = 1461 / 4
-        const el = bmstuRef.current
-        const room = e.target
-        const originX = room.offsetLeft
-        const originY = room.offsetTop
-        const realLeft = e.clientX - translate.x
-        const realTop = e.clientY - translate.y
-        const newLeft = window.innerWidth / 2 - room.offsetLeft
-        const newTop = window.innerHeight / 2 - room.offsetTop
+    const zoomToRoom = (room) => {
+        const originX = room.left
+        const originY = room.top
+        const newLeft = window.innerWidth / 2 - room.left
+        const newTop = window.innerHeight / 2 - room.top
         console.log(translate, "translate")
 
         console.log(originX, originY, "origin")
-        console.log(realLeft, realTop, "real")
         console.log(newLeft, newTop, "new")
         // el.style.transformOrigin = `${originX}px ${originY}px`
         // el.style.transform = `scale(2) translateX(${newLeft}px) translateY(${newTop}px)`
@@ -63,17 +55,8 @@ export default function BmstuFundament() {
         >
             <BmstuFundamentImage />
             {roomsForLevel.map((room) => (
-                <Room
-                    key={room.id}
-                    left={room.left}
-                    top={room.top}
-                    width={room.width}
-                    height={room.height}
-                    number={room.number}
-                    zoomToRoom={zoomToRoom}
-                />
+                <Room room={room} zoomToRoom={zoomToRoom} />
             ))}
-            <Room left={200} top={200} content={200} zoomToRoom={zoomToRoom} />
         </Container>
     )
 }

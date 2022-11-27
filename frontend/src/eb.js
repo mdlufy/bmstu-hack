@@ -1,3 +1,5 @@
-import eventBus from "js-event-bus"
+import { EventEmitter, Factory, Event, List } from "@webkadiz/event-emitter"
 
-export default eventBus()
+const emitter = new EventEmitter(new Factory(Event, List))
+
+export default emitter

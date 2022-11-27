@@ -56,12 +56,14 @@ export default function BmstuMenu() {
         )[0]
 
         if (room) {
+            dispatchRoomFocus(room.id)
             setSearchValue(room.number)
             setOpen(false)
         }
     }
 
     const dispatchRoomFocus = (id) => {
+        console.log("dispath", id)
         eb.emit("roomFocus", id)
     }
 

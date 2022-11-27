@@ -1,13 +1,33 @@
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import { Popover } from "antd"
+import eb from "../eb"
 
 export default function Room(props) {
+    const { room } = props
     const [hovered, setHovered] = useState(false)
     const [clicked, setClicked] = useState(false)
+    const roomRef = useRef(null)
 
-    const zoomToRoom = (e) => {
-        props.zoomToRoom(e, props)
+    const roomFocus = (roomId) => {
+        console.log("roomfocus2", roomId, room.id)
+        if (roomId == room.id) {
+            props.zoomToRoom(room)
+            hide()
+            setTimeout(() => setClicked(true), 500)
+
+            console.log("roomfocus")
+        }
+    }
+
+    useEffect(() => {
+        eb.on("roomFocus", roomFocus)
+
+        return () => eb.off("roomFocus", roomFocus)
+    }, [])
+
+    const zoomToRoom = () => {
+        props.zoomToRoom(room)
         hide()
         setTimeout(() => setClicked(true), 500)
     }
@@ -51,8 +71,8 @@ export default function Room(props) {
                 open={clicked}
                 onOpenChange={handleClickChange}
             >
-                <Container {...props} onClick={zoomToRoom}>
-                    {props.number}
+                <Container {...room} onClick={zoomToRoom} ref={roomRef}>
+                    {room.number}
                 </Container>
             </Popover>
         </Popover>
