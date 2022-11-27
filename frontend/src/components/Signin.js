@@ -1,14 +1,16 @@
 import { Button, Form, Input, message, Modal } from "antd"
 import axios from "axios"
-import { useDispatch } from "react-redux"
-import { setTokenAction } from "../slices/user"
+import { useDispatch, useSelector } from "react-redux"
+import { selectToken, setTokenAction } from "../slices/user"
 import { useState } from "react"
 import styled from "styled-components"
 import { useForm } from "antd/es/form/Form"
+import useSelection from "antd/es/table/hooks/useSelection"
 
 export default function Signin() {
     const dispatch = useDispatch()
     const [form] = useForm()
+    const token = useSelector(selectToken)
 
     const onFinish = () => {
         axios
@@ -16,6 +18,8 @@ export default function Signin() {
             .then(({ data }) => {
                 console.log(data)
                 dispatch(setTokenAction(data.token))
+                localStorage.setItem("token", data.token)
+                setIsModalOpen(false)
                 message.success("Вход выполнен")
             })
             .catch(() => {
@@ -42,13 +46,15 @@ export default function Signin() {
 
     return (
         <Container>
-            <Button
-                className={"auth-button"}
-                type="primary"
-                onClick={showModal}
-            >
-                Войти
-            </Button>
+            {token && (
+                <Button
+                    className={"auth-button"}
+                    type="primary"
+                    onClick={showModal}
+                >
+                    Войти
+                </Button>
+            )}
             <Modal
                 title="Авторизация"
                 open={isModalOpen}

@@ -9,12 +9,12 @@ import BmstuMenu from "./components/BmstuMenu"
 import { setRoomsAction } from "./slices/rooms"
 import axios from "axios"
 import BmstuFeedback from "./components/BmstuFeedback"
-import Signin from "./components/Signin";
+import Signin from "./components/Signin"
 
 const roomsFallback = JSON.parse(
     '[{"id":2,"number":"201","floor":2,"description":"Кафедра БМТ-1. Учебно-нвучная лаборатория методов автоматизированного распознавания биомедицинских изображений и сигналов",' +
-    '"typeId":1,"left":10,"top":112,"width":30,"height":20},{"id":4,"number":"203","floor":2,"description":"Учебная аудитория","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":6,"number":"205","floor":2,"description":"Кафедра РК-9 Секция: Системы и методы управления жизненным циклом","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":8,"number":"207","floor":2,"description":"Кафедра МТ-1","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":10,"number":"209","floor":2,"description":"Учебная аудитория","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":14,"number":"214","floor":2,"description":"Библиотека. Отдел технической обработки","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":15,"number":"313","floor":2,"description":"Читальный зал и абонемент научной литературы. Читальный зал старших курсов","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":16,"number":"215","floor":2,"description":"Неизвестная аудитория","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":13,"number":"212","floor":2,"description":"Отдел Компьютерных технологий. Дисплейный класс","typeId":1,"left":10,"top":168,"width":25,"height":12},{"id":1,"number":"200","floor":2,"description":"Кафедра БМТ-1","typeId":1,"left":10,"top":70,"width":25,"height":12},{"id":11,"number":"210а","floor":2,"description":"Компьютерная лаборатория №5. Компьютерный класс №501","typeId":1,"left":10,"top":140,"width":25,"height":12},{"id":3,"number":"202","floor":2,"description":"НОЦ. Фотоника и ИК-техника","typeId":1,"left":10,"top":84,"width":25,"height":12},{"id":7,"number":"206","floor":2,"description":"Учебная Аудитория","typeId":1,"left":10,"top":112,"width":25,"height":12},{"id":12,"number":"210","floor":2,"description":"Компьютерная лаборатория №5. Включая компьютерный класс №501 и №502","typeId":1,"left":10,"top":154,"width":25,"height":12},{"id":5,"number":"204","floor":2,"description":"Учебная аудитория","typeId":1,"left":10,"top":98,"width":25,"height":12},' +
-    '{"id":9,"number":"208","floor":2,"description":"Кафедра: Промышленный дизайн","typeId":1,"left":20,"top":126,"width":25,"height":12}]'
+        '"typeId":1,"left":10,"top":112,"width":30,"height":20},{"id":4,"number":"203","floor":2,"description":"Учебная аудитория","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":6,"number":"205","floor":2,"description":"Кафедра РК-9 Секция: Системы и методы управления жизненным циклом","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":8,"number":"207","floor":2,"description":"Кафедра МТ-1","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":10,"number":"209","floor":2,"description":"Учебная аудитория","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":14,"number":"214","floor":2,"description":"Библиотека. Отдел технической обработки","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":15,"number":"313","floor":2,"description":"Читальный зал и абонемент научной литературы. Читальный зал старших курсов","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":16,"number":"215","floor":2,"description":"Неизвестная аудитория","typeId":1,"left":1,"top":1,"width":30,"height":20},{"id":13,"number":"212","floor":2,"description":"Отдел Компьютерных технологий. Дисплейный класс","typeId":1,"left":10,"top":168,"width":25,"height":12},{"id":1,"number":"200","floor":2,"description":"Кафедра БМТ-1","typeId":1,"left":10,"top":70,"width":25,"height":12},{"id":11,"number":"210а","floor":2,"description":"Компьютерная лаборатория №5. Компьютерный класс №501","typeId":1,"left":10,"top":140,"width":25,"height":12},{"id":3,"number":"202","floor":2,"description":"НОЦ. Фотоника и ИК-техника","typeId":1,"left":10,"top":84,"width":25,"height":12},{"id":7,"number":"206","floor":2,"description":"Учебная Аудитория","typeId":1,"left":10,"top":112,"width":25,"height":12},{"id":12,"number":"210","floor":2,"description":"Компьютерная лаборатория №5. Включая компьютерный класс №501 и №502","typeId":1,"left":10,"top":154,"width":25,"height":12},{"id":5,"number":"204","floor":2,"description":"Учебная аудитория","typeId":1,"left":10,"top":98,"width":25,"height":12},' +
+        '{"id":9,"number":"208","floor":2,"description":"Кафедра: Промышленный дизайн","typeId":1,"left":20,"top":126,"width":25,"height":12}]'
 )
 
 function App() {
@@ -24,20 +24,39 @@ function App() {
 
     const rooms = roomsFallback
 
+    useEffect(() => {
+        axios("/objects")
+            .then(({ data }) => {
+                const rooms = data.map((room) => ({
+                    id: room.Id_object,
+                    number: room.Number,
+                    title: room.Title,
+                    description: room.Description,
+                    left: room.X_coordination,
+                    top: room.Y_coordination,
+                    width: room.Width,
+                    height: room.Height,
+                    floor: room.Floor
+                }))
+
+                console.log(rooms)
+                dispatch(setRoomsAction(rooms))
+            })
+            .catch(console.error)
+    }, [])
+
     rooms.push({
         left: 100,
         top: 100,
         width: 20,
         height: 20,
         floor: 2,
-        number: '222'
+        number: "222"
     })
 
     console.log(JSON.stringify(rooms))
     setRoomsAction(rooms)
     console.log(rooms)
-
-
 
     useEffect(() => {
         window.addEventListener("keydown", (e) => {
