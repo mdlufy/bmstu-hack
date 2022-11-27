@@ -70,6 +70,8 @@
     display: none;
 }
 
-.auth-button{
-    background-color: plum;
+.auth-button {
+    position: absolute;
+    right: 90px;
+    bottom: 0px;
 }
