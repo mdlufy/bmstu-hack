@@ -25,6 +25,8 @@ export default function Room(props) {
 
     const handleClickChange = (open) => {
         setHovered(false)
+        if (open) return
+        setClicked(open)
     }
 
     return (
@@ -50,7 +52,7 @@ export default function Room(props) {
                 onOpenChange={handleClickChange}
             >
                 <Container {...props} onClick={zoomToRoom}>
-                    {props.content}
+                    {props.number}
                 </Container>
             </Popover>
         </Popover>
@@ -58,6 +60,7 @@ export default function Room(props) {
 }
 
 const Container = styled.div`
+    text-align: center;
     position: absolute;
     left: ${(props) => props.left}px;
     top: ${(props) => props.top}px;
