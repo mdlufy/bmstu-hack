@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { DeleteOutlined } from "@ant-design/icons"
 import { getFavorites, selectFavorites, selectToken } from "../slices/user"
 import axios from "axios"
+import eb from "../eb"
 
 export default function Favorites() {
     const dispatch = useDispatch()
@@ -19,18 +20,25 @@ export default function Favorites() {
                     authorization: `bearer ${token}`
                 }
             })
-            .then(() => {
-                dispatch(getFavorites())
-            })
+            .then(() => {})
             .catch(() => {
-                message.error("Не удалось удалить(")
+                dispatch(getFavorites())
+                // message.error("Не удалось удалить(")
             })
+    }
+
+    const roomFocus = (e, room) => {
+        const target = e.target
+
+        if (target.closest(".anticon-delete")) return
+
+        eb.emit("roomFocus", room.id)
     }
 
     return favorites.length ? (
         <List
             dataSource={favorites.map((item) => (
-                <FavoriteItem>
+                <FavoriteItem onClick={(e) => roomFocus(e, item)}>
                     {item.title}{" "}
                     <DeleteOutlined
                         onClick={deleteFavorite.bind(null, item.favoriteId)}
@@ -47,6 +55,7 @@ const FavoriteItem = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
+    cursor: pointer;
 `
 const StyledListItem = styled(List.Item)`
     background: white;
